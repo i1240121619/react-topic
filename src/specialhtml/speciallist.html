@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>页面列表</title>
+    <link href="staticSource/css/bootstrap.min.css" rel="stylesheet">
+    <link href="staticSource/font-awesome/font-awesome.css" rel="stylesheet">
+    <link href="staticSource/css/common.css" rel="stylesheet">
+    <link href="staticSource/css/animate.css" rel="stylesheet">
+    <link rel="stylesheet" href="staticSource/css/plugins/summernote/summernote-bs3.css"> 
+    <link rel="stylesheet" href="staticSource/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="staticSource/css/plugins/datetimepicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="staticSource/css/style.css" rel="stylesheet">
+</head>
+<body class="skin-1">
+    <div><!-- id="wrapper" -->
+        <div class="gray-bg" style="padding: 15px 15px 0;">
+            <div class="wrapper wrapper-content width-100">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>页面列表</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <form id="sp_form">
+                                            <div class="search_box_item">
+                                                <span class="title">渠道：</span>
+                                                <span class="input-box-200">
+                                                     <select class="form-control" id="channelss">
+                                                         <option value="">全部</option>
+                                                         <option value="BPTJ">爆品推荐</option>
+                                                         <option value="WXM">微信商城</option>
+                                                         <option value="O2O">O2O</option>
+                                                     </select>
+                                                </span>
+                                            </div>
+
+                                            <div class="search_box_item">
+                                                <span class="title">页面名称：</span>
+                                                <span class="input-box-200">
+                                                    <input type="text" name="advertName" class="form-control" id="activityNamess">
+                                                </span>
+                                            </div>
+
+                                            <div class="search_box_item">
+                                                <a href="javascript:void(0)" class="btn btn-primary" onclick="searchspecial()"><i class="fa fa-search"></i>&nbsp;&nbsp;查询</a>
+                                                <a href="javascript:void(0)" class="btn btn-default" id="add_btn"><i class="fa fa-plus"></i>&nbsp;&nbsp;<span class="bold">新增页面</span></a>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                                <hr style="height:1px;border:none;border-top:1px solid #ddd;margin: 10px 0;"/>
+                                <table id="speciallist"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--页面列表 新增/编辑 start-->
+    <div id="add-form" class="modal fade" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" style="width: 800px;">
+            <div class="modal-content animated bounceInTop">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">新增页面</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 ">
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <div class="row">
+                                        <div class="col-xs-3 title"><span style="color: red">* </span>页面名称：</div>
+                                        <div class="col-xs-9 text"><input type="text" class="form-control notempty" id="activityName" placeholder="不超过15个汉字" maxlength="15"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <div class="row">
+                                        <div class="col-xs-3 title">投放渠道：</div>
+                                        <div class="col-xs-9 text">
+                                            <select class="form-control" id="channel">
+                                                <option value="BPTJ">爆品推荐</option>
+                                                <option value="WXM">微信商城</option>
+                                                <option value="O2O">O2O</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <div class="row">
+                                        <div class="col-xs-3 title">分享图片：</div>
+                                        <div class="col-xs-9 text">
+                                            <form method="post" action="" enctype="multipart/form-data" id="ossform" name="ossform" >
+                                                <!--accessID: --><input id="accessID" type="hidden" name="OSSAccessKeyId" size="50" />
+                                                <!--signature: --><input id="signature" type="hidden" name="signature" size="50" />
+                                                <!--key: --><input id="key" type="hidden" name="key" size="50" />
+                                                <!--expire: --><input id="expire" type="hidden" name="expire" size="50" />
+                                                <!--policy: --><input id="policy" type="hidden" name="policy" size="50" />
+                                                <input type="file" name="file" id="file" class="form-control" accept=".jpg,.gif,.png" onchange="getFileName();" style="padding-top: 4px;">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4 text filecheck color_red"></div>
+                            </div>
+                            <div class="row" id="uploadDiv" style="display:none">
+                                <div class="col-xs-8">
+                                    <div class="row">
+                                        <div class="col-xs-9 col-xs-offset-3 text">
+                                            <button type="button" class="btn btn-primary pull-left" style="margin-right: 20px;" id="subtn">上传</button>
+                                            <div class="title pull-left">结果信息：</div>
+                                            <span class="title pull-left color_green" id="upResult"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" id="fxImg" style="display: none">
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-2 title">预览图：</div>
+                                        <div class="col-xs-10 text">
+                                            <img style="max-width:100%;max-height:100px;" alt="图片暂无，请上传">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <div class="row">
+                                        <div class="col-xs-3 title">分享摘要：</div>
+                                        <div class="col-xs-9 text"><textarea class="form-control" maxlength="30" id='note' placeholder="不超过30个汉字"></textarea></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <div class="row">
+                                        <div class="col-xs-3 title"><span style="color: red">* </span>开始时间：</div>
+                                        <div class="col-xs-5 text" style="padding-right: 0"><input type="text" class="form-control notempty kssj" readonly="readonly"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <div class="row">
+                                        <div class="col-xs-3 title"><span style="color: red">* </span>结束时间：</div>
+                                        <div class="col-xs-5 text" style="padding-right: 0"><input type="text" class="form-control notempty jssj" readonly="readonly"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="text-align:center;">
+                    <div id="footer_btn">
+                        <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">
+                            <strong>取消</strong>
+                        </button>
+                        <button class="btn btn-sm btn-primary submitAdd" type="button" onclick="submitAdd()">
+                            <strong>保存</strong>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--页面列表 新增/编辑 end-->
+
+    <!--页面列表 删除 start-->
+    <div id="delete-form" class="modal fade" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" style="width: 500px;">
+            <div class="modal-content animated bounceInTop">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">删除页面</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 ">
+                            <h4 class="color_red">是否删除该条页面？（不可恢复）</h4>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-xs-3 title2">页面名称：</div>
+                                        <div class="col-xs-9 text2 text-overflow"><b class="text_b " id="activityName1"></b></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="margin:0 auto;text-align:center;">
+                    <button class="btn btn-sm btn-danger" type="button" data-dismiss="modal" onclick="deleteAdv()">
+                        <strong>确认删除</strong>
+                    </button>
+                    <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">
+                        <strong>取消</strong>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--页面列表 删除 end-->
+<!--<script src="../constants/ypConfigtes.js"></script>-->
+<script src="../../ypConfig.js"></script>
+<script src="staticSource/js/jquery-2.1.0/jquery-2.1.0.js"></script>
+<script src="staticSource/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="staticSource/js/openx.js"></script><!-- openx -->
+<script src="staticSource/js/plugins/pace/pace.min.js"></script>
+<script src="staticSource/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="staticSource/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="staticSource/js/plugins/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="staticSource/js/plugins/datetimepicker/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript" src="staticSource/js/plugins/layer/layer.js"></script>
+<script type="text/javascript" src="staticSource/js/jquery-form.js"></script>
+<script src="staticSource/js/common.js"></script>
+<script type="text/javascript">
+    var _openx_head =getSession('_openx_head');
+
+    var $table = $('#speciallist');//获取表格
+
+    $(".kssj").datetimepicker({//时间控件
+        startView: 'month',
+        format: 'yyyy-mm-dd hh:ii:00',
+        autoclose: true,
+        todayBtn: true,
+        minuteStep: 5,
+        language: 'zh-CN',
+
+    });
+    $(".jssj").datetimepicker({//时间控件
+        startView: 'month',
+        format: 'yyyy-mm-dd hh:ii:00',
+        autoclose: true,
+        todayBtn: true,
+        minuteStep: 5,
+        language: 'zh-CN',
+    });
+
+    var activityCode
+    var cztype
+    //表格中的一系列事件
+    window.operateEvents = {
+        'click .delete': function (e, value, row, index) {
+            activityCode=row.activityCode
+            $("#activityName1").html(row.activityName);
+            $("#delete-form").modal("show");
+        },
+        'click .xiugai': function (e, value, row, index) {
+            closeAllFile();//清空
+            activityCode=row.activityCode
+            cztype='xiugai'
+            $("#activityName").val(row.activityName);
+            $("#add-form select").val(row.channel);
+            $("#note").val(row.note);//清空
+            $("#add-form .kssj").val(sjczhuansj(row.startTime));
+            $("#add-form .jssj").val(sjczhuansj(row.endTime));
+            if(row.picUrl){
+                $("#fxImg").show();
+                $("#fxImg img").attr("src",row.picUrl);
+            }
+
+            $(".modal-title","#add-form").html("修改页面");
+            $("#add-form").modal("show");
+
+
+        },
+        'click .bianji': function (e, value, row, index) {
+            window.open('/specialProject/specialEdit/specialEdit.html?id='+row.activityCode)
+        },
+        'click .yulan': function (e, value, row, index) {
+            window.open('/specialProject/special/special.html?id='+row.activityCode)
+        }
+    };
+
+    //页面表格 参数
+    var table_param = {
+        method : 'post',                                         //请求方式
+        url : backendHost+'/colombo/ActivityService/findActivityByPage',//请求地址
+        cache : false,                                          //是否使用缓存，默认为true
+        sidePagination : "server",                              //分页方式
+        pagination : true,                                      //是否显示分页（*）
+        pageSize : 20,                                          //初始化每页的记录行数
+        pageList : [10, 30, 50],                           //可供选择的每页的行数
+        striped: true,                                          //是否显示行间隔色
+        queryParams : function(params) {                        //不设置此参数。默认提交order:asc,limit:10每页条数,offset:0条数偏移,_:1457946418402
+            var data={
+                _openx_head : _openx_head,
+                "activityBaseModel": {
+                    "activityName": $("#activityNamess").val(),
+                    "channel": $("#channelss").val(),
+                },
+                "pageNum":(params.offset / params.limit) + 1,
+                "pageSize":params.limit
+            };
+            return data
+        },
+        formatShowingRows: function (pageFrom, pageTo, totalRows) {
+            return '显示' + pageFrom + '-' + pageTo + '条记录，共' + totalRows + '条记录。';
+        },
+        formatRecordsPerPage: function (pageNumber) {
+            return '每页' + pageNumber + ' 条';
+        },
+        columns: [
+            [{
+                field: 'channel',
+                title: '渠道',
+                valign: 'middle',
+                align: 'center',
+                formatter : function (value, row, index) {
+                    switch(value){
+                        case 'BPTJ':
+                            status = '爆品推荐';
+                            break;
+                        case 'WXM':
+                            status = '微信商城';
+                            break;
+                        case 'O2O':
+                            status = 'O2O';
+                            break;
+                        default:
+                            status = '-';
+                    }
+
+                    return [
+                        '<span>'+ status +'</span>'
+                    ].join('');
+                }
+            },{
+                field: 'activityName',
+                title: '页面名称',
+                valign: 'middle',
+                align: 'center'
+            },{
+                field: 'activityUrl',
+                title: '链接',
+                valign: 'middle',
+                align: 'center',
+            },{
+                field: 'status',
+                title: '状态',
+                valign: 'middle',
+                align: 'center',
+                formatter : function (value, row, index) {
+                    switch(value){
+                        case '0':
+                            status = '已过期';
+                            break;
+                        case '1':
+                            status = '有效';
+                            break;
+                        case '2':
+                            status = '未生效';
+                            break;
+                        default:
+                            status = '-';
+                    }
+
+                    return [
+                        '<span>'+ status +'</span>'
+                    ].join('');
+                }
+            },{
+                field: 'createTime',
+                title: '创建时间',
+                valign: 'middle',
+                align: 'center',
+                formatter : function (value, row, index) {
+                    var createTime=sjczhuansj(row.createTime)
+                    return [
+                        '<span>'+ createTime +'</span>'
+                    ].join('');
+                }
+            },{
+                field: 'creator',
+                title: '创建人',
+                valign: 'middle',
+                align: 'center',
+            },{
+                title: '操作',
+                valign: 'middle',
+                align: 'center',
+                events : operateEvents,
+                formatter : function (value, row, index) {
+                    return [
+                        '<a class="delete btn btn-danger" href="javascript:void(0)">删除</a> ',
+                        '<a class="xiugai btn btn-warning" href="javascript:void(0)">修改</a> ',
+                        '<a class="bianji btn btn-success" href="javascript:void(0)">编辑</a> ',
+                        '<a class="yulan btn btn-primary" href="javascript:void(0)">预览</a> '
+                    ].join('');
+                }
+            }]
+        ]
+    };
+
+    //表格查询
+    var searchspecial = function (){
+        $table.bootstrapTable("destroy").bootstrapTable(table_param);
+    }
+
+    //表格重置
+    var resetCoupou = function(){
+        document.getElementById("sp_form").reset()
+        $table.bootstrapTable("destroy").bootstrapTable(table_param);
+    }
+
+    searchspecial();
+
+    //新增
+    $("#add_btn").click(function(){
+        closeAllFile();//清空
+        cztype='zengjia'
+        $(".modal-title","#add-form").html("新增页面");
+
+        $("#add-form").modal({
+            backdrop: 'static'
+        });
+    });
+
+    /* 文件上传 start */
+    function getFileName() {
+        var file = $('#file');
+        var filepath = file.val();
+        var arr = filepath.split('\\');
+        var filename = arr[arr.length - 1];//这就是要取得的文件名称
+        if(filename == '' || filename == 'undefind'){
+            layer.msg('请选择需要上传的文件！');
+            $('#upResult').html("");
+            return;
+        } else{
+
+            var extStart = filepath.lastIndexOf(".");
+            var ext0 = filepath.substring(extStart,filepath.length);
+            var ext = ext0.toUpperCase();
+            if(ext != ".PNG" && ext != ".JPG" && ext != ".GIF"){// 1、文件格式判断
+                $(".filecheck").html("图片限于png，jpg，gif格式");
+                return;
+            };
+
+            var sizeB = file[0].files[0].size;//b
+            var sizeKB = sizeB/1024;// /kb
+            console.log(sizeKB);
+
+            var Max_Size =500; //2M=2048kb  2、文件大小判断
+            if (sizeKB > Max_Size) {
+                $(".filecheck").html("上传的图片不能大于500kb");
+                return;
+            };
+
+            $("#uploadDiv").show();//上传按钮区显示
+
+            $("#subtn","#uploadDiv").attr("disabled","disabled");//按钮禁掉
+            $('#upResult').html("<i class='fa fa-spinner'></i> 文件服务器初始化...");
+            $(".filecheck").html("");
+
+            findFileKey(filename,ext0);
+        };
+    }
+         
+    //获取文件上传前置数据
+    function findFileKey(fileName,ext0){//param 原完整名称 现后缀
+        var name = fileName.split('.');
+        var fileName1= name[0] + ext0//保持后缀一致
+        var data={fileName:fileName1}
+        wxShopToOpenXAjax({
+            url:backendHost+'/colombo/ActivityService/uploadFile',
+            type: "GET",
+            dataType: "json",
+            data:data,
+            success: function(data) {
+                $('#ossform').attr("action", data.host)
+                $('#accessID','#ossform').val(data.accessID);
+                $('#policy','#ossform').val(data.policy);
+                $('#signature','#ossform').val(data.signature);
+                $('#key','#ossform').val(data.key);
+                $('#expire','#ossform').val(data.expire);
+
+                $("#subtn","#uploadDiv").removeAttr("disabled");//按钮打开
+                $('#upResult').html("文件服务器初始化完成，可上传");
+
+            },
+            error: function (error) {
+                console.log("================uploadFile================")
+                console.log("上传健全接口--uploadFile : "+error)
+                alert("上传健全接口--uploadFile : "+error)
+            },
+            //timeout: 5000,//超时时间设置，单位毫秒
+        });//ajax
+    }
+    var filePath
+    //上传
+    $('#subtn').click(function() {
+        $('#upResult').html("<i class='fa fa-spinner'></i> 请稍候");
+        var arr = $('#file').val().split('\\');
+        var filename = arr[arr.length - 1];//这就是要取得的文件名称 
+        var form = $("form[name=ossform]");  
+        var url1= $('#ossform').attr("action");
+        let url=url1.replace("http:","https:")
+        if(url == null || url == '' || filename == '' || filename == 'undefind'){
+            $('#upResult').html("请先选择文件！");
+            return;
+        };
+
+        var options = {    
+            url: url,    
+            type: 'post',    
+            success: function(data) {
+                $('#upResult').html("上传服务器成功！");
+                var url= $('#ossform').attr("action");
+                var timestamp = Date.parse(new Date());
+                filePath = url + "/" + $('#key').val() + "?" + timestamp;
+                $("#fxImg").show()
+                $("#fxImg img").attr("src",filePath);
+
+            }
+        };    
+        form.ajaxSubmit(options);//异步
+    });
+
+    var closeAllFile = function (){//清空
+        $("#add-form input[type='text']").val("");//清空
+        $("#add-form input[type='hidden']").val("");//清空
+        $("#add-form input[type='file']").val("");//清空
+        $("#note").val("");//清空
+
+        $("#fxImg").hide()
+        $("#uploadDiv").hide()
+    }
+
+
+
+    var deleteAdv = function(){//删除
+        var data={activityCode:activityCode}
+        wxShopToOpenXAjax({
+            url:backendHost+'/colombo/ActivityService/removeActivity',
+            type: "POST",
+            data:data,
+            success: function() {
+                $table.bootstrapTable("refresh");//刷新表格
+            },
+            error: function (error) {
+                console.log("================removeActivity================")
+                console.log("删除接口--removeActivity : "+error)
+                alert("删除接口--removeActivity : "+error)
+            },
+            //timeout: 5000,//超时时间设置，单位毫秒
+        });//ajax
+    }
+
+    var sjzhuansjc=function(a){
+        var stringTime = a;
+        var timestamp2 = Date.parse(new Date(stringTime));
+        return timestamp2
+    }
+
+    var sjczhuansj=function(a){
+
+        var date = new Date(a);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? ('0' + m) : m;
+        var d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ('0' + h) : h;
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+        minute = minute < 10 ? ('0' + minute) : minute;
+        second = second < 10 ? ('0' + second) : second;
+        return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+    }
+
+
+    var submitAdd= function() {//新增页面保存
+            var notemptyflag = true;
+            $.each($(".notempty"), function (i,item){//空校验
+                if ($(item).val() == '') {
+                    $(item).focus();//
+                    notemptyflag = false;
+                    return false;
+                };
+            });
+
+            if (!notemptyflag) {//空校验
+                layer.msg('请填写完整的信息, 带 * 为必填项！');
+                return;
+            };
+
+            if (sjzhuansjc($(".kssj").val())>sjzhuansjc($(".jssj").val())) {//空校验
+                layer.msg('开始时间不能大于结束时间！');
+                return;
+            };
+            var data={
+                "activityBaseModel": {
+                    "activityCode":activityCode,
+                    "channel":$("#channel").val(),
+                    "activityName": $("#activityName").val(),
+                    "picUrl": filePath,
+                    "startTime": sjzhuansjc($(".kssj").val()),
+                    "endTime": sjzhuansjc($(".jssj").val()),
+                    "note":$("#note").val(),
+                }
+            }
+
+            if (cztype == 'xiugai') {//修改
+                wxShopToOpenXAjax({
+                    url:backendHost+'/colombo/ActivityService/updateActivity',
+                    type: "POST",
+                    data:data,
+                    success: function() {
+                        $("#add-form").modal("hide");
+                        $table.bootstrapTable("refresh");//刷新表格
+                    },
+                    error: function (error) {
+                        console.log("================updateActivity================")
+                        console.log("更新接口--updateActivity : "+error)
+                        alert("更新接口--updateActivity : "+error)
+                    },
+                    //timeout: 5000,//超时时间设置，单位毫秒
+                });//ajax
+            } else if (cztype == 'zengjia'){//新增
+                wxShopToOpenXAjax({
+                    url:backendHost+'/colombo/ActivityService/createActivity',
+                    type: "POST",
+                    data:data,
+                    success: function() {
+                        $("#add-form").modal("hide");
+                        $table.bootstrapTable("refresh");//刷新表格
+                    },
+                    error: function (error) {
+                        console.log("================createActivity================")
+                        console.log("新增接口--createActivity : "+error)
+                        alert("新增接口--createActivity : "+error)
+                    },
+                    //timeout: 5000,//超时时间设置，单位毫秒
+                });//ajax
+            };
+
+
+
+
+    }
+
+    var showError = function(error){//错误提示
+        if(error!=undefined){
+            var responseText = JSON.parse(error);
+            var message = responseText.message;
+            layer.msg(message);
+        }else{
+            layer.msg('系统出现未知错误,请联系管理员');
+        };
+    }
+</script>
+</body>
+</html>

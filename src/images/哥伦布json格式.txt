@@ -1,0 +1,279 @@
+一、创建活动（不包含内容）
+{
+    "activityName": "国庆有好礼", 
+    "activityUrl": "http://baidu.com.1111", 
+    "startTime": "May 15, 2017 8:20:40 PM", 
+    "endTime": "May 15, 2017 8:20:40 PM", 
+    "creator": "xx"
+}
+
+二、查询活动列表（不包含内容）
+[
+    {
+        "activityCode": "59199d186b642730ac9a226b", 
+        "activityName": "国庆有好礼", 
+        "activityType": "1", 
+        "activityUrl": "http://baidu.com.1111", 
+        "status": "0", 
+        "startTime": "May 15, 2017 8:20:40 PM", 
+        "endTime": "May 15, 2017 8:20:40 PM", 
+        "creator": "xx", 
+        "createTime": "May 15, 2017 8:20:40 PM", 
+        "updateTime": "May 15, 2017 8:20:40 PM"
+    },{},{}........
+]
+
+
+三、创建/变更活动内容
+
+{
+    "floorList": [
+        {
+            "activityFloorNum": 1, 
+            "setType": "0", 
+            "backgroundColor": "#18382737", 
+            "floorTitle": "一楼", 
+            "titleColor": "#8898899", 
+            "titleSize": "3", 
+            "styleType": "2", 
+            "activityFloorLayout": "2", 
+            "mediaList": [
+                {
+                    "showType": "0", 
+                    "showUrl": "http://baidu.com", 
+                    "showNum": 1, 
+                    "jumpType": "1", 
+                    "jumpUrl": "http://baidu.com", 
+                    "goodsCode": "201564"
+                }, 
+                {
+                    "showType": "0", 
+                    "showUrl": "http://baidu.com1", 
+                    "showNum": 2, 
+                    "jumpType": "1", 
+                    "jumpUrl": "http://baidu.com1", 
+                    "goodsCode": "2015641"
+                }
+            ]
+        }, 
+        {
+            "activityFloorNum": 2, 
+            "setType": "1", 
+            "backgroundColor": "#234234242", 
+            "floorTitle": "二楼", 
+            "titleColor": "#33453453", 
+            "titleSize": "4", 
+            "styleType": "7", 
+            "activityFloorLayout": "1", 
+            "sourceModel": {
+                "dataSource": "0", 
+                "goodsList": [
+                    {
+                        "goodsCode": "232323232", 
+                        "goodsJumpUrl": "http://baidu.com/goods"
+                    }, 
+                    {
+                        "goodsCode": "2323231111", 
+                        "goodsJumpUrl": "http://baidu.com/goods"
+                    }
+                ]
+            }
+        }
+    ], 
+    "styleList": [
+        {
+            "buttonType": "1", 
+            "buttonPicUrl": "http://baidu.com/button", 
+            "backgroundColor": "#000808998", 
+            "buttonTitle": "立即抢购", 
+            "titleColor": "39998977", 
+            "titleSize": "12", 
+            "promotionList": [
+                {
+                    "promotionName": "套餐一", 
+                    "promotionPrice": 123, 
+                    "promotionDetailList": [
+                        {
+                            "goodsCode": "88998989", 
+                            "quantity": 1
+                        }, 
+                        {
+                            "goodsCode": "83435345349", 
+                            "quantity": 2
+                        }
+                    ]
+                }, 
+                {
+                    "promotionName": "套餐二", 
+                    "promotionPrice": 345, 
+                    "promotionDetailList": [
+                        {
+                            "goodsCode": "88998989", 
+                            "quantity": 1
+                        }, 
+                        {
+                            "goodsCode": "83435345349", 
+                            "quantity": 2
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "activityCode": "59199a4b6b6427330c82abc2"
+}
+
+四、查询接口数据格式
+{
+    "floorList": [
+        {
+            "floorCode": "59199ad86b64271b209f357e", 
+            "activityCode": "59199a4b6b6427330c82abc2", 
+            "activityFloorNum": 1, 
+            "setType": "0", 
+            "backgroundColor": "#18382737", 
+            "floorTitle": "一楼", 
+            "titleColor": "#8898899", 
+            "titleSize": "3", 
+            "styleType": "2", 
+            "activityFloorLayout": "2", 
+            "createTime": "May 15, 2017 8:11:05 PM", 
+            "updateTime": "May 15, 2017 8:11:05 PM", 
+            "mediaList": [
+                {
+                    "floorCode": "59199ad86b64271b209f357e", 
+                    "showType": "0", 
+                    "showUrl": "http://baidu.com", 
+                    "showNum": 1, 
+                    "jumpType": "1", 
+                    "jumpUrl": "http://baidu.com", 
+                    "goodsCode": "201564", 
+                    "createTime": "May 15, 2017 8:11:05 PM", 
+                    "updateTime": "May 15, 2017 8:11:05 PM"
+                }, 
+                {
+                    "floorCode": "59199ad86b64271b209f357e", 
+                    "showType": "0", 
+                    "showUrl": "http://baidu.com1", 
+                    "showNum": 2, 
+                    "jumpType": "1", 
+                    "jumpUrl": "http://baidu.com1", 
+                    "goodsCode": "2015641", 
+                    "createTime": "May 15, 2017 8:11:05 PM", 
+                    "updateTime": "May 15, 2017 8:11:05 PM"
+                }
+            ]
+        }, 
+        {
+            "floorCode": "59199ad96b64271b209f357f", 
+            "activityCode": "59199a4b6b6427330c82abc2", 
+            "activityFloorNum": 2, 
+            "setType": "1", 
+            "backgroundColor": "#234234242", 
+            "floorTitle": "二楼", 
+            "titleColor": "#33453453", 
+            "titleSize": "4", 
+            "styleType": "7", 
+            "activityFloorLayout": "1", 
+            "createTime": "May 15, 2017 8:11:05 PM", 
+            "updateTime": "May 15, 2017 8:11:05 PM", 
+            "sourceModel": {
+                "sourceCode": "59199ad96b64271b209f3580", 
+                "floorCode": "59199ad96b64271b209f357f", 
+                "dataSource": "0", 
+                "createTime": "May 15, 2017 8:11:05 PM", 
+                "updateTime": "May 15, 2017 8:11:05 PM", 
+                "goodsList": [
+                    {
+                        "sourceCode": "59199ad96b64271b209f3580", 
+                        "goodsCode": "232323232", 
+                        "goodsJumpUrl": "http://baidu.com/goods", 
+                        "createTime": "May 15, 2017 8:11:05 PM", 
+                        "updateTime": "May 15, 2017 8:11:05 PM"
+                    }, 
+                    {
+                        "sourceCode": "59199ad96b64271b209f3580", 
+                        "goodsCode": "2323231111", 
+                        "goodsJumpUrl": "http://baidu.com/goods", 
+                        "createTime": "May 15, 2017 8:11:05 PM", 
+                        "updateTime": "May 15, 2017 8:11:05 PM"
+                    }
+                ]
+            }
+        }
+    ], 
+    "styleList": [
+        {
+            "promotionPageCode": "59199ad96b64271b209f3581", 
+            "activityCode": "59199a4b6b6427330c82abc2", 
+            "buttonType": "1", 
+            "buttonPicUrl": "http://baidu.com/button", 
+            "backgroundColor": "#000808998", 
+            "buttonTitle": "立即抢购", 
+            "titleColor": "39998977", 
+            "titleSize": "12", 
+            "createTime": "May 15, 2017 8:11:05 PM", 
+            "updateTime": "May 15, 2017 8:11:05 PM", 
+            "promotionList": [
+                {
+                    "promotionCode": "59199ad96b64271b209f3582", 
+                    "promotionPageCode": "59199ad96b64271b209f3581", 
+                    "promotionName": "套餐一", 
+                    "promotionPrice": 123, 
+                    "createTime": "May 15, 2017 8:11:05 PM", 
+                    "updateTime": "May 15, 2017 8:11:05 PM", 
+                    "promotionDetailList": [
+                        {
+                            "promotionCode": "59199ad96b64271b209f3582", 
+                            "goodsCode": "88998989", 
+                            "quantity": 1, 
+                            "createTime": "May 15, 2017 8:11:06 PM", 
+                            "updateTime": "May 15, 2017 8:11:06 PM"
+                        }, 
+                        {
+                            "promotionCode": "59199ad96b64271b209f3582", 
+                            "goodsCode": "83435345349", 
+                            "quantity": 2, 
+                            "createTime": "May 15, 2017 8:11:06 PM", 
+                            "updateTime": "May 15, 2017 8:11:06 PM"
+                        }
+                    ]
+                }, 
+                {
+                    "promotionCode": "59199ad96b64271b209f3583", 
+                    "promotionPageCode": "59199ad96b64271b209f3581", 
+                    "promotionName": "套餐二", 
+                    "promotionPrice": 345, 
+                    "createTime": "May 15, 2017 8:11:06 PM", 
+                    "updateTime": "May 15, 2017 8:11:06 PM", 
+                    "promotionDetailList": [
+                        {
+                            "promotionCode": "59199ad96b64271b209f3583", 
+                            "goodsCode": "88998989", 
+                            "quantity": 1, 
+                            "createTime": "May 15, 2017 8:11:06 PM", 
+                            "updateTime": "May 15, 2017 8:11:06 PM"
+                        }, 
+                        {
+                            "promotionCode": "59199ad96b64271b209f3583", 
+                            "goodsCode": "83435345349", 
+                            "quantity": 2, 
+                            "createTime": "May 15, 2017 8:11:06 PM", 
+                            "updateTime": "May 15, 2017 8:11:06 PM"
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "activityCode": "59199a4b6b6427330c82abc2", 
+    "activityName": "国庆有好礼", 
+    "activityType": "1", 
+    "activityUrl": "http://baidu.com.1111", 
+    "status": "0", 
+    "startTime": "May 15, 2017 8:08:43 PM", 
+    "endTime": "May 15, 2017 8:08:43 PM", 
+    "creator": "xx", 
+    "createTime": "May 15, 2017 8:08:43 PM", 
+    "updateTime": "May 15, 2017 8:08:43 PM"
+}
